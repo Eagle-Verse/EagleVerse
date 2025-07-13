@@ -1,5 +1,5 @@
  import React, { useState, useRef, useEffect } from 'react';
- import { X, Upload, Camera, Zap, TrendingUp, Target, Download } from 'lucide-react';
+import { X, Upload, Camera, Zap } from 'lucide-react';
  
  interface DemoWidgetProps {
   onClose: () => void;
@@ -215,15 +215,19 @@
  
   // Toggle flash (if supported)
   const handleToggleFlash = async () => {
-  if (!stream) return;
-  const videoTrack = stream.getVideoTracks()[0];
-  // @ts-ignore
-  const capabilities = videoTrack.getCapabilities?.();
-  if (capabilities && capabilities.torch) {
-  // @ts-ignore
-  await videoTrack.applyConstraints({ advanced: [{ torch: !flashOn }] });
-  setFlashOn((f) => !f);
-  }
+    if (!stream) return;
+    try {
+      const videoTrack = stream.getVideoTracks()[0];
+      const capabilities = videoTrack.getCapabilities?.();
+      if (capabilities && 'torch' in capabilities) {
+        await videoTrack.applyConstraints({ 
+          advanced: [{ torch: !flashOn } as any] 
+        });
+        setFlashOn((f) => !f);
+      }
+    } catch (error) {
+      console.log('Flash not supported on this device');
+    }
   };
  
   // Capture photo from video
