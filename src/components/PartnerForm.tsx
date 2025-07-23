@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Confetti from 'react-confetti';
 import { Send, CheckCircle, TrendingUp, Users, Zap } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import { axiosInstance } from '@/lib/axios';
+import Cookies from 'js-cookie'
+
 
 const PartnerForm = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +27,6 @@ const PartnerForm = () => {
     preferredStartDate: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [backendStatus, setBackendStatus] = useState<string | null>(null);
   const { toast } = useToast();
   const partnerSectionRef = useRef<HTMLElement>(null);
 
@@ -40,6 +42,18 @@ const PartnerForm = () => {
       });
       return;
     }
+
+    // Email validation using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email Address",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     // Prepare payload for backend
     const payload = {
       source: "website",
@@ -55,24 +69,37 @@ const PartnerForm = () => {
       businessType: formData.businessType,
       gstin: formData.gstin
     };
+    console.log(payload)
     try {
-      const username = "admin";
-      const password = "eagle123";
-      const credentials = btoa(`${username}:${password}`);
-      await fetch('https://eagle-backend-v1-production.up.railway.app/api/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${credentials}`
-        },
-        body: JSON.stringify(payload)
-      }); 
-      setIsSubmitted(true);
-      toast({
-        title: "Partnership Request Submitted!",
-        description: "We'll contact you within 12 hours to discuss your revenue transformation.",
-      });
+      const res = await axiosInstance.post('/leads', JSON.stringify(payload), {
+             withCredentials: false
+      }
+      )
+      
+      console.log('Response status:', res.status);
+      console.log('Response headers:', res.headers);
+      
+      if (res.status >= 200 && res.status < 300) {
+        // Response data is already parsed in Axios
+        console.log('Response data:', res.data);
+        Cookies.set('salon-lead-Id', res.data.id, { domain: '.eagleverse.tech', expires: 365 })
+        setIsSubmitted(true);
+        toast({
+          title: "Partnership Request Submitted!",
+          description: "We'll contact you within 12 hours to discuss your revenue transformation.",
+        });
+      } else {
+        // Handle non-200 status codes
+        const errorText = res.data.error.message;
+        console.error('Error response:', errorText);
+        toast({
+          title: "Submission Failed",
+          description: `Server responded with status ${res.status}. Please try again later.`,
+          variant: "destructive"
+        });
+      }
     } catch (err) {
+      console.error('Network error:', err);
       toast({
         title: "Submission Failed",
         description: "There was a problem submitting your request. Please try again later.",
@@ -81,25 +108,6 @@ const PartnerForm = () => {
     }
   };
 
-  const testBackend = async () => {
-    try {
-      const username = "admin";
-      const password = "eagle123";
-      const credentials = btoa(`${username}:${password}`);
-      const res = await fetch('https://eagle-backend-v1-production.up.railway.app/api/leads', {
-        headers: {
-          'Authorization': `Basic ${credentials}`
-        }
-      });
-      if (res.ok) {
-        setBackendStatus('Backend is reachable');
-      } else {
-        setBackendStatus('Backend responded with error: ' + res.status);
-      }
-    } catch (err) {
-      setBackendStatus('Could not reach backend.');
-    }
-  };
 
   useEffect(() => {
     if (isSubmitted) {
@@ -313,9 +321,9 @@ const PartnerForm = () => {
   </option>
   <option value="owner">Owner</option>
   <option value="manager">Manager</option>
-  <option value="director">Director</option>
-  <option value="partner">Partner</option>
-  <option value="other">Other</option>
+  {/* <option value="director">Senior Therapist</option>
+  <option value="partner">Therapist</option>
+  <option value="other">Receptionist</option> */}
 </select>
                   </div>
 
@@ -328,9 +336,12 @@ const PartnerForm = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
+                      className={`w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors ${formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'border-red-500' : ''}`}
                       placeholder="contact@salon.com"
                     />
+                    {formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
+                      <span className="text-red-500 text-sm mt-1 block">Please enter a valid email address.</span>
+                    )}
                   </div>
 
                   <div>
@@ -407,18 +418,7 @@ const PartnerForm = () => {
                 </div>
               </div>
 
-              <div className="mb-8 flex justify-center">
-                <button
-                  type="button"
-                  className="btn-secondary px-4 py-2 rounded-lg text-base"
-                  onClick={testBackend}
-                >
-                  Test Backend Connectivity
-                </button>
-                {backendStatus && (
-                  <span className="ml-4 text-coral-400 font-semibold">{backendStatus}</span>
-                )}
-              </div>
+              
 
               <button
                 type="submit"
