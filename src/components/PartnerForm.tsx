@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, type JSX } from 'react';
 import Confetti from 'react-confetti';
 import { Send, CheckCircle, TrendingUp, Users, Zap } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
@@ -158,6 +158,7 @@ const PartnerForm = () => {
   return (
     <section ref={partnerSectionRef} id="partner" className="mt-10 section-padding bg-navy-900">
       <div className="container-width">
+        {/* Header Text */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-navy-50">
             Ready to Transform
@@ -169,8 +170,29 @@ const PartnerForm = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          <div>
-            <h3 className="text-2xl font-serif font-semibold mb-8 text-navy-50">
+          {/* Left Section */}
+          <div className='flex flex-col gap-8'>
+            <div>
+              <div className="glass-effect rounded-xl p-6 hover-lift flex flex-col items-center">
+                <h3 className="text-xl font-serif font-semibold text-navy-50 mb-2 text-center">
+                  Already a Partner?
+                </h3>
+                <p className="text-navy-300 mb-4">
+                  Access your salon's dashboard to view insights, manage appointments, and track revenue growth.
+                </p>
+                <a 
+                  href="https://salon.eagleverse.tech" 
+                  className="btn-primary inline-flex items-center justify-center space-x-2 mt-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Go to Dashboard</span>
+                  <TrendingUp className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-serif font-semibold mb-8 text-navy-50">
               What You Get as Our Partner:
             </h3>
             
@@ -201,9 +223,13 @@ const PartnerForm = () => {
                 First 30 partners get <span className="font-bold">1 month free</span> implementation support
               </div>
             </div>
+            </div>
           </div>
 
           <div className="glass-effect rounded-2xl p-8">
+            <h3 className="text-2xl font-serif font-semibold text-navy-50 mb-8 text-center">
+              Begin Your Revenue Transformation Journey
+            </h3>
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Salon Information Section */}
               <div>

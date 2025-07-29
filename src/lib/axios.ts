@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 export const axiosInstance: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_BASE_URL}/api`,
+  baseURL: 'https://eagle-backend-v2-staging.up.railway.app/api',
   headers: {
     "Content-Type": "application/json",
   },
