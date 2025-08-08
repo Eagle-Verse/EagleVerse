@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Sparkles, Users, BarChart3, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Sparkles, Users, BarChart3, Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/results', label: 'Results' },
-  { to: '/partner', label: 'Partner' },
-  { to: '/faq', label: 'FAQ' },
-  { to: '/contact', label: 'Contact' },
+  { to: "/", label: "Home" },
+  { to: "/results", label: "Results" },
+  // { to: '/partner', label: 'Partner' },
+  { to: "/faq", label: "FAQ" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const Navigation = () => {
@@ -20,27 +20,29 @@ const Navigation = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [mobileOpen]);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'border-b border-navy-800/50 bg-navy-950 shadow-lg' 
-        : 'border-b border-navy-800/30 bg-navy-950'
-    }`}>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-navy-800/50 bg-navy-950 shadow-lg"
+          : "border-b border-navy-800/30 bg-navy-950"
+      }`}
+    >
       <div className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between max-w-7xl mx-auto">
         {/* Brand */}
         <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group">
@@ -51,44 +53,48 @@ const Navigation = () => {
             EagleVerse
           </span>
         </Link>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-          {navLinks.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`font-medium transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${
-                currentPath === item.to
-                  ? 'text-coral-400 bg-coral-500/10'
-                  : 'text-navy-200 hover:text-coral-400'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+
+        {/* Desktop Navigation - Center Links */}
+        <div className="hidden lg:flex items-center justify-center flex-1">
+          <div className="flex items-center space-x-6 xl:space-x-8">
+            {navLinks.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`font-medium transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${
+                  currentPath === item.to
+                    ? "text-coral-400 bg-coral-500/10"
+                    : "text-navy-200 hover:text-coral-400"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Navigation - Right Actions */}
+        <div className="hidden lg:flex items-center space-x-4">
+          {/* Try Demo */}
           <Link
             to="/demo"
             className={`font-medium flex items-center space-x-2 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${
-              currentPath === '/demo'
-                ? 'text-coral-400 bg-coral-500/10'
-                : 'text-navy-200 hover:text-coral-400'
+              currentPath === "/demo"
+                ? "text-coral-400 bg-coral-500/10"
+                : "text-navy-200 hover:text-coral-400"
             }`}
           >
-            <BarChart3 className="h-4 w-4" />
             <span>Try Demo</span>
           </Link>
-          <a
-            href="https://salon-portal-eagleverse.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Partner With US */}
+          <Link
+            to="/partner"
             className="btn-secondary flex items-center space-x-2 text-sm font-medium py-2 px-4 hover:scale-105 transition-transform"
           >
-            <Users className="h-4 w-4" />
-            <span>Client Portal</span>
-          </a>
+            <span>Partner With Us</span>
+          </Link>
         </div>
-        
+
         {/* Mobile Navigation Trigger */}
         <div className="lg:hidden">
           <button
@@ -129,48 +135,43 @@ const Navigation = () => {
                   EagleVerse
                 </span>
               </div>
-              
+
               {navLinks.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
                   className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium transition-colors text-lg sm:text-xl w-full ${
                     currentPath === item.to
-                      ? 'text-coral-400 bg-coral-500/10 border border-coral-500/20'
-                      : 'text-navy-200 hover:text-coral-400 hover:bg-navy-800'
+                      ? "text-coral-400 bg-coral-500/10 border border-coral-500/20"
+                      : "text-navy-200 hover:text-coral-400 hover:bg-navy-800"
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-              
+
               <Link
                 to="/demo"
                 className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium flex items-center space-x-2 sm:space-x-3 transition-colors text-lg sm:text-xl w-full ${
-                  currentPath === '/demo'
-                    ? 'text-coral-400 bg-coral-500/10 border border-coral-500/20'
-                    : 'text-navy-200 hover:text-coral-400 hover:bg-navy-800'
+                  currentPath === "/demo"
+                    ? "text-coral-400 bg-coral-500/10 border border-coral-500/20"
+                    : "text-navy-200 hover:text-coral-400 hover:bg-navy-800"
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
-                <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>Try Demo</span>
               </Link>
-              
-              <a
-                href="https://salon-portal-eagleverse.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 sm:mt-6 w-full py-3 sm:py-4 px-3 sm:px-4 bg-coral-500 text-white rounded-lg font-medium flex items-center justify-center space-x-2 hover:bg-coral-600 transition-colors text-lg sm:text-xl shadow-lg"
-                onClick={() => setMobileOpen(false)}
+
+              <Link
+                to="/partner"
+                className="btn-secondary flex items-center space-x-2 text-sm font-medium py-2 px-4 hover:scale-105 transition-transform"
               >
-                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>Client Portal</span>
-              </a>
+                <span>Partner With Us</span>
+              </Link>
             </div>
           </div>
-          
+
           <style>
             {`
               @keyframes slideIn {
