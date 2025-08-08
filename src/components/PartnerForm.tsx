@@ -173,11 +173,11 @@ const PartnerForm = () => {
           {/* Left Section */}
           <div className='flex flex-col gap-8'>
             <div>
-              <div className="glass-effect rounded-xl p-6 hover-lift flex flex-col items-center">
-                <h3 className="text-xl font-serif font-semibold text-navy-50 mb-2 text-center">
+              <div className="glass-effect rounded-xl py-6 px-4  hover-lift flex flex-col items-center">
+                <h3 className="text-3xl font-serif font-semibold text-navy-50 mb-2 text-center">
                   Already a Partner?
                 </h3>
-                <p className="text-navy-300 mb-4">
+                <p className="text-navy-300 text-md mb-4 text-center">
                   Access your salon's dashboard to view insights, manage appointments, and track revenue growth.
                 </p>
                 <a 
@@ -192,7 +192,7 @@ const PartnerForm = () => {
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-serif font-semibold mb-8 text-navy-50">
+              <h3 className="text-3xl font-serif font-semibold mb-8 text-navy-50">
               What You Get as Our Partner:
             </h3>
             
@@ -227,7 +227,7 @@ const PartnerForm = () => {
           </div>
 
           <div className="glass-effect rounded-2xl p-8">
-            <h3 className="text-2xl font-serif font-semibold text-navy-50 mb-8 text-center">
+            <h3 className="text-3xl font-serif font-semibold text-navy-50 mb-8 text-center">
               Begin Your Revenue Transformation Journey
             </h3>
             <form onSubmit={handleSubmit} className="space-y-8">
