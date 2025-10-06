@@ -294,3 +294,16 @@
     backdrop-filter: blur(20px);
   }
 }
+
+/* Checkbox mobile fixes */
+@media (max-width: 768px) {
+  [role="checkbox"], 
+  [data-radix-collection-item] {
+    flex-shrink: 0 !important;
+    min-width: 1.25rem !important;
+    min-height: 1.25rem !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    aspect-ratio: 1 !important;
+  }
+}
