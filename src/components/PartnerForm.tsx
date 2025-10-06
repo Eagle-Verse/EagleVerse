@@ -481,7 +481,7 @@ const PartnerForm = () => {
                             Terms of Use and Consent Form
                           </button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-navy-800 border-navy-700">
+                        <DialogContent className="w-[95vw] max-w-4xl max-h-[85vh] overflow-y-auto bg-navy-800 border-navy-700 mx-2 sm:mx-auto p-4 sm:p-6">
                           <DialogHeader>
                             <DialogTitle className="text-navy-50 text-xl font-serif">
                               <div className="flex items-center space-x-2">
@@ -490,8 +490,8 @@ const PartnerForm = () => {
                               </div>
                             </DialogTitle>
                           </DialogHeader>
-                          <div className="text-navy-200 text-sm leading-relaxed space-y-4">
-                            <div className="text-center font-bold text-navy-50 text-lg mb-6">
+                          <div className="text-navy-200 text-sm sm:text-base leading-relaxed space-y-4">
+                            <div className="text-center font-bold text-navy-50 text-base sm:text-lg mb-6">
                               CONSENT FORM FOR BETA TESTING OF MOBILE APPLICATION FOR SALON
                             </div>
                             

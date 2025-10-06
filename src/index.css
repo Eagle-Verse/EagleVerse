@@ -328,4 +328,12 @@
     height: 1rem !important;
     aspect-ratio: 1 !important;
   }
+  
+  /* Dialog mobile positioning fixes */
+  [role="dialog"] {
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
