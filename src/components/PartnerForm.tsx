@@ -591,14 +591,14 @@ const PartnerForm = () => {
               <button
                 type="submit"
                 disabled={!consentAgreed}
-                className={`w-full flex items-center justify-center space-x-3 text-lg transition-all ${
+                className={`w-full flex items-center justify-center space-x-3 text-lg px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
                   consentAgreed 
-                    ? 'btn-primary hover:shadow-lg' 
-                    : 'bg-navy-700 text-navy-400 cursor-not-allowed border border-navy-600'
+                    ? 'bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 text-white shadow-lg hover:shadow-xl hover:shadow-coral-500/25 border border-coral-500' 
+                    : 'bg-navy-800 text-navy-500 cursor-not-allowed border border-navy-700 opacity-60'
                 }`}
               >
                 <span>Start My Revenue Transformation</span>
-                <Send className="h-5 w-5" />
+                <Send className={`h-5 w-5 ${!consentAgreed ? 'opacity-50' : ''}`} />
               </button>
 
               <p className="text-navy-400 text-sm text-center">
