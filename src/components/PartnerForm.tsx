@@ -465,7 +465,7 @@ const PartnerForm = () => {
                     id="consent"
                     checked={consentAgreed}
                     onCheckedChange={(checked) => setConsentAgreed(checked as boolean)}
-                    className="mt-1 border-navy-600 data-[state=checked]:bg-coral-500 data-[state=checked]:border-coral-500"
+                    className="mt-1 h-5 w-5 border-2 border-navy-400 bg-navy-800 data-[state=checked]:bg-coral-500 data-[state=checked]:border-coral-500 data-[state=checked]:text-white hover:border-coral-400 transition-colors"
                   />
                   <div className="flex-1">
                     <label htmlFor="consent" className="text-navy-200 text-sm cursor-pointer">
