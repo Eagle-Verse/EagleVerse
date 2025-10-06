@@ -306,4 +306,26 @@
     height: 1.25rem !important;
     aspect-ratio: 1 !important;
   }
+  
+  /* Dialog close button mobile fixes */
+  [role="dialog"] button[data-radix-collection-item],
+  [data-radix-dialog-close-button] {
+    flex-shrink: 0 !important;
+    min-width: 1.5rem !important;
+    min-height: 1.5rem !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    aspect-ratio: 1 !important;
+  }
+  
+  /* X icon inside dialog close button */
+  [role="dialog"] button svg,
+  [data-radix-dialog-close-button] svg {
+    flex-shrink: 0 !important;
+    min-width: 1rem !important;
+    min-height: 1rem !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    aspect-ratio: 1 !important;
+  }
 }
