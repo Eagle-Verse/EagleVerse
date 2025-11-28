@@ -24,22 +24,22 @@ const BASIC_AUTH_ENDPOINTS = [
 // Automatically attach appropriate authorization to every request
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const url = config.url || '';
-  
+
   // Check if this is a public endpoint that doesn't need auth
-  const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint => 
+  const isPublicEndpoint = PUBLIC_ENDPOINTS.some(endpoint =>
     url.startsWith(endpoint)
   );
-  
+
   if (isPublicEndpoint) {
     // Don't add any authorization header for public endpoints
     return config;
   }
-  
+
   // Check if this endpoint requires Basic Auth
-  const requiresBasicAuth = BASIC_AUTH_ENDPOINTS.some(endpoint => 
+  const requiresBasicAuth = BASIC_AUTH_ENDPOINTS.some(endpoint =>
     url.startsWith(endpoint)
   );
-  
+
   if (requiresBasicAuth) {
     // Add Basic Auth header (you might want to store these credentials securely)
     const username = process.env.REACT_APP_BASIC_AUTH_USERNAME || 'admin';
@@ -48,17 +48,17 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     config.headers["authorization"] = `Basic ${credentials}`;
     return config;
   }
-  
+
   // For all other endpoints, try to add Bearer token
   const token = localStorage.getItem("salon-token");
   if (token) {
     config.headers["authorization"] = `Bearer ${token}`;
   }
-  
+
   return config;
 });
 
-// Optional: Add response interceptor to handle auth errors
+// Add response interceptor to handle auth errors and backend unavailability
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -68,6 +68,13 @@ axiosInstance.interceptors.response.use(
       // Optionally redirect to login page
       // window.location.href = '/login';
     }
+
+    // Handle backend unavailability gracefully
+    if (!error.response || error.code === 'ERR_NETWORK') {
+      // Backend is down or unreachable
+      error.isBackendDown = true;
+    }
+
     return Promise.reject(error);
   }
 );

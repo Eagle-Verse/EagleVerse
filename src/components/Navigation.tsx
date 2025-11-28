@@ -37,11 +37,10 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-8 left-0 w-full z-40 transition-all duration-300 ${scrolled
           ? "border-b border-navy-800/50 bg-navy-950 shadow-lg"
           : "border-b border-navy-800/30 bg-navy-950"
-      }`}
+        }`}
     >
       <div className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between max-w-7xl mx-auto">
         {/* Brand */}
@@ -61,11 +60,10 @@ const Navigation = () => {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`font-medium transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${
-                  currentPath === item.to
+                className={`font-medium transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${currentPath === item.to
                     ? "text-coral-400 bg-coral-500/10"
                     : "text-navy-200 hover:text-coral-400"
-                }`}
+                  }`}
               >
                 {item.label}
               </Link>
@@ -78,11 +76,10 @@ const Navigation = () => {
           {/* Try Demo */}
           <Link
             to="/demo"
-            className={`font-medium flex items-center space-x-2 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${
-              currentPath === "/demo"
+            className={`font-medium flex items-center space-x-2 transition-all duration-200 py-2 px-3 rounded-lg hover:bg-navy-800/50 ${currentPath === "/demo"
                 ? "text-coral-400 bg-coral-500/10"
                 : "text-navy-200 hover:text-coral-400"
-            }`}
+              }`}
           >
             <span>Try Demo</span>
           </Link>
@@ -140,11 +137,10 @@ const Navigation = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium transition-colors text-lg sm:text-xl w-full ${
-                    currentPath === item.to
+                  className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium transition-colors text-lg sm:text-xl w-full ${currentPath === item.to
                       ? "text-coral-400 bg-coral-500/10 border border-coral-500/20"
                       : "text-navy-200 hover:text-coral-400 hover:bg-navy-800"
-                  }`}
+                    }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
@@ -153,11 +149,10 @@ const Navigation = () => {
 
               <Link
                 to="/demo"
-                className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium flex items-center space-x-2 sm:space-x-3 transition-colors text-lg sm:text-xl w-full ${
-                  currentPath === "/demo"
+                className={`text-left py-3 sm:py-4 px-3 sm:px-4 rounded-lg font-medium flex items-center space-x-2 sm:space-x-3 transition-colors text-lg sm:text-xl w-full ${currentPath === "/demo"
                     ? "text-coral-400 bg-coral-500/10 border border-coral-500/20"
                     : "text-navy-200 hover:text-coral-400 hover:bg-navy-800"
-                }`}
+                  }`}
                 onClick={() => setMobileOpen(false)}
               >
                 <span>Try Demo</span>

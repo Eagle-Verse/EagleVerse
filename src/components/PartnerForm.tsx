@@ -16,13 +16,13 @@ const PartnerForm = () => {
     city: '',
     avgMonthlyFootfall: '',
     clientType: '',
-    
+
     // Primary Contact
     contactName: '',
     email: '',
     phone: '',
     designation: '',
-    
+
     // Business Details
     businessType: '',
     gstin: '',
@@ -35,7 +35,7 @@ const PartnerForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Consent validation
     if (!consentAgreed) {
       toast({
@@ -45,7 +45,7 @@ const PartnerForm = () => {
       });
       return;
     }
-    
+
     // Phone number validation
     const phone = formData.phone.replace(/\D/g, '');
     if (phone.length !== 10) {
@@ -86,13 +86,13 @@ const PartnerForm = () => {
     console.log(payload)
     try {
       const res = await axiosInstance.post('/leads', JSON.stringify(payload), {
-             withCredentials: false
+        withCredentials: false
       }
       )
-      
+
       console.log('Response status:', res.status);
       console.log('Response headers:', res.headers);
-      
+
       if (res.status >= 200 && res.status < 300) {
         // Response data is already parsed in Axios
         console.log('Response data:', res.data);
@@ -112,13 +112,22 @@ const PartnerForm = () => {
           variant: "destructive"
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Network error:', err);
-      toast({
-        title: "Submission Failed",
-        description: "There was a problem submitting your request. Please try again later.",
-        variant: "destructive"
-      });
+
+      // Check if backend is down
+      if (err.isBackendDown || !err.response) {
+        toast({
+          title: "We're Getting Ready! 🚀",
+          description: "Our platform is currently being upgraded. We'll be launching soon! Your interest means a lot to us.",
+        });
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: "There was a problem submitting your request. Please try again later.",
+          variant: "destructive"
+        });
+      }
     }
   };
 
@@ -179,7 +188,7 @@ const PartnerForm = () => {
             <span className="gradient-text"> Your Salon?</span>
           </h2>
           <p className="text-xl text-navy-300 max-w-3xl mx-auto">
-              Be among the first salons onboarding our AI system to boost revenue by up to 150%.
+            Be among the first salons onboarding our AI system to boost revenue by up to 150%.
           </p>
         </div>
 
@@ -194,8 +203,8 @@ const PartnerForm = () => {
                 <p className="text-navy-300 text-md mb-4 text-center">
                   Access your salon's dashboard to view insights, manage appointments, and track revenue growth.
                 </p>
-                <a 
-                  href="https://salon.eagleverse.tech" 
+                <a
+                  href="https://salon.eagleverse.tech"
                   className="btn-primary inline-flex items-center justify-center space-x-2 mt-2"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -207,36 +216,36 @@ const PartnerForm = () => {
             </div>
             <div>
               <h3 className="text-3xl font-serif font-semibold mb-8 text-navy-50">
-              What You Get as Our Partner:
-            </h3>
-            
-            <div className="space-y-6">
-              {benefits.map((benefit, index) => (
-                <div 
-                  key={index}
-                  className="flex items-start space-x-4 p-6 glass-effect rounded-xl hover-lift"
-                >
-                  <div className="bg-coral-500 p-3 rounded-xl flex-shrink-0">
-                    <benefit.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-navy-50 mb-2">
-                      {benefit.title}
-                    </h4>
-                    <p className="text-navy-300">
-                      {benefit.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                What You Get as Our Partner:
+              </h3>
 
-            <div className="mt-8 p-6 bg-coral-500/10 rounded-2xl border border-coral-500/20">
-              <div className="text-coral-400 font-semibold mb-2">Limited Time Offer:</div>
-              <div className="text-navy-50 text-lg">
-                First 30 partners get <span className="font-bold">1 month free</span> implementation support
+              <div className="space-y-6">
+                {benefits.map((benefit, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start space-x-4 p-6 glass-effect rounded-xl hover-lift"
+                  >
+                    <div className="bg-coral-500 p-3 rounded-xl flex-shrink-0">
+                      <benefit.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-navy-50 mb-2">
+                        {benefit.title}
+                      </h4>
+                      <p className="text-navy-300">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
+
+              <div className="mt-8 p-6 bg-coral-500/10 rounded-2xl border border-coral-500/20">
+                <div className="text-coral-400 font-semibold mb-2">Limited Time Offer:</div>
+                <div className="text-navy-50 text-lg">
+                  First 30 partners get <span className="font-bold">1 month free</span> implementation support
+                </div>
+              </div>
             </div>
           </div>
 
@@ -259,7 +268,7 @@ const PartnerForm = () => {
                       type="text"
                       required
                       value={formData.salonName}
-                      onChange={(e) => setFormData({...formData, salonName: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, salonName: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="Your salon's name"
                     />
@@ -272,7 +281,7 @@ const PartnerForm = () => {
                     <input
                       type="text"
                       value={formData.BranchID}
-                      onChange={(e) => setFormData({...formData, BranchID: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, BranchID: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="Enter branch ID or number (if applicable)"
                     />
@@ -286,7 +295,7 @@ const PartnerForm = () => {
                       type="text"
                       required
                       value={formData.city}
-                      onChange={(e) => setFormData({...formData, city: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="Primary city location"
                     />
@@ -301,7 +310,7 @@ const PartnerForm = () => {
                       required
                       min={0}
                       value={formData.avgMonthlyFootfall}
-                      onChange={(e) => setFormData({...formData, avgMonthlyFootfall: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, avgMonthlyFootfall: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="Enter average monthly Customers"
                     />
@@ -314,7 +323,7 @@ const PartnerForm = () => {
                     <select
                       required
                       value={formData.clientType}
-                      onChange={(e) => setFormData({...formData, clientType: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, clientType: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                     >
                       <option value="">Select client type</option>
@@ -340,7 +349,7 @@ const PartnerForm = () => {
                       type="text"
                       required
                       value={formData.contactName}
-                      onChange={(e) => setFormData({...formData, contactName: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="Contact person name"
                     />
@@ -351,20 +360,20 @@ const PartnerForm = () => {
                       Designation *
                     </label>
                     <select
-  required
-  value={formData.designation}
-  onChange={(e) => setFormData({...formData, designation: e.target.value})}
-  className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
->
-  <option value="" disabled hidden>
-    Select designation
-  </option>
-  <option value="owner">Owner</option>
-  <option value="manager">Manager</option>
-  {/* <option value="director">Senior Therapist</option>
+                      required
+                      value={formData.designation}
+                      onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+                      className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
+                    >
+                      <option value="" disabled hidden>
+                        Select designation
+                      </option>
+                      <option value="owner">Owner</option>
+                      <option value="manager">Manager</option>
+                      {/* <option value="director">Senior Therapist</option>
   <option value="partner">Therapist</option>
   <option value="other">Receptionist</option> */}
-</select>
+                    </select>
                   </div>
 
                   <div>
@@ -375,7 +384,7 @@ const PartnerForm = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className={`w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors ${formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'border-red-500' : ''}`}
                       placeholder="contact@salon.com"
                     />
@@ -420,7 +429,7 @@ const PartnerForm = () => {
                     <select
                       required
                       value={formData.businessType}
-                      onChange={(e) => setFormData({...formData, businessType: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                     >
                       <option value="">Select business type</option>
@@ -438,7 +447,7 @@ const PartnerForm = () => {
                     <input
                       type="text"
                       value={formData.gstin}
-                      onChange={(e) => setFormData({...formData, gstin: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, gstin: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                       placeholder="22AAAAA0000A1Z5 (Optional)"
                     />
@@ -451,7 +460,7 @@ const PartnerForm = () => {
                     <input
                       type="date"
                       value={formData.preferredStartDate}
-                      onChange={(e) => setFormData({...formData, preferredStartDate: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, preferredStartDate: e.target.value })}
                       className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-navy-50 focus:outline-none focus:border-coral-500 transition-colors"
                     />
                   </div>
@@ -462,7 +471,7 @@ const PartnerForm = () => {
               <div className="border-t border-navy-700 pt-6">
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 mt-1">
-                    <Checkbox 
+                    <Checkbox
                       id="consent"
                       checked={consentAgreed}
                       onCheckedChange={(checked) => setConsentAgreed(checked as boolean)}
@@ -474,7 +483,7 @@ const PartnerForm = () => {
                       I agree to the{' '}
                       <Dialog>
                         <DialogTrigger asChild>
-                          <button 
+                          <button
                             type="button"
                             className="text-coral-400 hover:text-coral-300 underline transition-colors"
                           >
@@ -494,29 +503,29 @@ const PartnerForm = () => {
                             <div className="text-center font-bold text-navy-50 text-base sm:text-lg mb-6">
                               CONSENT FORM FOR BETA TESTING OF MOBILE APPLICATION FOR SALON
                             </div>
-                            
+
                             <p>
                               This Consent Form is executed on this ___ day of ______, 2025, by and between:
                             </p>
-                            
+
                             <p>
                               <strong>Eagle Verse Technology Private Limited</strong>, incorporated under the Companies Act, 2013, having its registered office at [Registered Address], hereinafter referred to as the "Company",
                             </p>
-                            
+
                             <p>
                               <strong>AND</strong>
                             </p>
-                            
+
                             <p>
                               [Name of Salon/Entity], having its business address at [Salon Address], hereinafter referred to as the "Salon Partner."
                             </p>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">1. Purpose</h4>
                               <p>The Salon Partner hereby grants consent to Eagle Verse Technology Pvt. Ltd. to conduct beta testing of its mobile application/software at the premises of the Salon Partner ("One Party Salon" or any designated salon branch).</p>
                               <p>The purpose of the beta testing is for research, product improvement, and AI training.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">2. Roles and Responsibilities</h4>
                               <p><strong>a.</strong> The Salon Partner agrees to allow Eagle Verse Technology Pvt. Ltd. to conduct testing activities, including capturing photographs/videos and personal details of consenting customers for testing and AI training purposes.</p>
@@ -524,7 +533,7 @@ const PartnerForm = () => {
                               <p><strong>c.</strong> The Company shall be solely responsible for data collection, storage, and compliance with applicable data protection laws.</p>
                               <p><strong>d.</strong> The Salon Partner shall not be liable for any misuse or breach of customer data, provided it has followed the process of informing and facilitating customer consent.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">3. Data Collection, Accuracy, and Protection</h4>
                               <p><strong>a. Data Types:</strong> The Company may collect and process customer data including images, videos, and personal details.</p>
@@ -533,35 +542,35 @@ const PartnerForm = () => {
                               <p><strong>d. Data Retention:</strong> All customer data will be stored securely for a maximum of 1 years, unless anonymized, after which it shall be deleted.</p>
                               <p><strong>e. Data Protection:</strong> Data will be managed in accordance with the Digital Personal Data Protection Act, 2023, and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">4. Disclaimer on Medical or Professional Advice</h4>
                               <p><strong>a.</strong> The User acknowledges that any recommendations, suggestions, or insights provided by the application are not medical advice, professional health treatment, or a substitute for consultation with a qualified doctor or professional.</p>
                               <p><strong>b.</strong> The output of the beta application is only a general advisory/recommendation generated by AI, and the decision to act upon it lies solely with the customer.</p>
                               <p><strong>c.</strong> The Company shall not be responsible or liable for any reliance placed on the app's suggestions or outcomes.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">5. No Compensation</h4>
                               <p>The Salon Partner acknowledges that it will not receive direct monetary compensation for hosting the beta testing. However, the Salon Partner may be acknowledged as a collaborator/partner in internal or external communications.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">6. Indemnity and Liability</h4>
                               <p><strong>a.</strong> Eagle Verse Technology Pvt. Ltd. shall indemnify and hold harmless the Salon Partner from any claims, disputes, or liabilities arising from customer participation in the beta testing.</p>
                               <p><strong>b.</strong> The Salon Partner shall not be held responsible for any breach of data, misuse of collected information, or disputes with customers regarding the beta testing.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">7. Governing Law and Jurisdiction</h4>
                               <p>This Consent Form shall be governed by the laws of India, and any disputes shall be subject to the exclusive jurisdiction of the courts of Mumbai, India.</p>
                             </div>
-                            
+
                             <div>
                               <h4 className="font-bold text-navy-50 mb-2">8. Declaration</h4>
                               <p>We, the undersigned, have read and understood the terms of this Consent Form and voluntarily agree to allow Eagle Verse Technology Pvt. Ltd. to conduct beta testing at our salon premises.</p>
                             </div>
-                            
+
                             <div className="grid md:grid-cols-2 gap-6 mt-6 pt-4 border-t border-navy-700">
                               <div>
                                 <h5 className="font-bold text-navy-50 mb-2">For Salon Partner (One Party Salon)</h5>
@@ -593,11 +602,10 @@ const PartnerForm = () => {
               <button
                 type="submit"
                 disabled={!consentAgreed}
-                className={`w-full flex items-center justify-center space-x-3 text-lg px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                  consentAgreed 
-                    ? 'bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 text-white shadow-lg hover:shadow-xl hover:shadow-coral-500/25 border border-coral-500' 
+                className={`w-full flex items-center justify-center space-x-3 text-lg px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${consentAgreed
+                    ? 'bg-gradient-to-r from-coral-500 to-coral-600 hover:from-coral-600 hover:to-coral-700 text-white shadow-lg hover:shadow-xl hover:shadow-coral-500/25 border border-coral-500'
                     : 'bg-navy-800 text-navy-500 cursor-not-allowed border border-navy-700 opacity-60'
-                }`}
+                  }`}
               >
                 <span>Start My Revenue Transformation</span>
                 <Send className={`h-5 w-5 ${!consentAgreed ? 'opacity-50' : ''}`} />
