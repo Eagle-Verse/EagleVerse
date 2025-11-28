@@ -42,7 +42,7 @@ git push origin main
 
 Your site will be available at:
 ```
-https://thunder25beast.github.io/ai-salon2/
+https://eagle-verse.github.io/EagleVerse/
 ```
 
 ## Important Notes
